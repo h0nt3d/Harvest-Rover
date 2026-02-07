@@ -1,6 +1,17 @@
 # ECE3232-Rover
-ECE3232 Rover Source Code
 
 ## Hardware:
 - MPLAB Xpress Development Board (PIC16F18855)
 - Snap Programmer
+- PCU - UNB Dev Board (microbit)
+- RCLS - Radio Controlled Laser System
+
+
+## Communication with PCU via payload requests
+
+### **Get PCU Info Command**  <br>
+`volatile uint8_t get_pcu_info[6] = {0xFE, 0x19, 0x01, 0x04, 0x00, 0x00};`
+
+**PCU Info Respsone** <br>
+16 bit buffer <br>
+`[SYNC1, SYNC2, IDLSB, IDMSB, SIZELSB, SIZEMSB, TEAMID, PLAYERID, HEALTHLSB, HEALTHMSB, SHIELDFLAG, REPAIRFLAG]`
