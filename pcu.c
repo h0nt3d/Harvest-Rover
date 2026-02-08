@@ -36,6 +36,15 @@ void send_set_motor_settings()
     }
 }
 
+void send_motor_settings(uint8_t dirA, uint8_t pwmA, uint8_t dirB, uint8_t pwmB)
+{
+    uint8_t msg[10] = {0xFE, 0x19, 0x01, 0x06, 0x04, 0x00, dirA, pwmA, dirB, pwmB};
+
+    for (uint8_t i = 0; i < 10; i++) {
+        TX1REG = msg[i];
+        while (!TX1STAbits.TRMT) {}
+    }
+}
 
 
 
