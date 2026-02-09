@@ -14,7 +14,9 @@
 ## Communication with PCU via payload requests
 
 ### **Get PCU Info Command**  <br>
-`volatile uint8_t get_pcu_info[6] = {0xFE, 0x19, 0x01, 0x04, 0x00, 0x00};`
+```c
+volatile uint8_t get_pcu_info[6] = {0xFE, 0x19, 0x01, 0x04, 0x00, 0x00};
+```
 
 **PCU Info Respsone** <br>
 12 bit buffer <br>
