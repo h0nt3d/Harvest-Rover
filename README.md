@@ -19,3 +19,7 @@
 **PCU Info Respsone** <br>
 12 bit buffer <br>
 `[SYNC1, SYNC2, IDLSB, IDMSB, SIZELSB, SIZEMSB, TEAMID, PLAYERID, HEALTHLSB, HEALTHMSB, SHIELDFLAG, REPAIRFLAG]`
+
+
+# Flysky Controls
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
