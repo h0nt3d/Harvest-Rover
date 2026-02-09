@@ -4,7 +4,7 @@
 - [MPLAB Xpress Development Board (PIC16F18855)](https://www.microchip.com/en-us/development-tool/dm164140)
 - [Snap Programmer](https://www.microchip.com/en-us/development-tool/pg164100)
 - PCU - UNB Dev Board [(microbit)](https://microbit.org/buy/) (Custom-made)
-- RCLS - [Radio Controlled Laser System](https://www.digikey.ca/en/products/detail/microchip-technology/DSPIC33CK128MP205-I-PT/9342075)(dsPIC33CK128MP205)
+- RCLS - [Radio Controlled Laser System](https://www.digikey.ca/en/products/detail/microchip-technology/DSPIC33CK128MP205-I-PT/9342075) (dsPIC33CK128MP205)
 
 ## Communication with PCU via payload requests
 
