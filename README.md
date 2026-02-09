@@ -8,6 +8,11 @@
 
 ## Communication with PCU via payload requests
 
+### *Note:*
+- **Bytes 1 & 2** - Sync Bytes
+- **Bytes 3 & 4** - Type of Message
+- **Bytes 5 & 6** - Payload Size
+
 ### **Get PCU Info Command**  <br>
 ```c
 volatile uint8_t get_pcu_info[6] = {0xFE, 0x19, 0x01, 0x04, 0x00, 0x00};
@@ -47,13 +52,13 @@ MSG_ID_LSB,
 MSG_ID_MSB,
 PAYLOAD_SIZE_LSB,
 PAYLOAD_SIZE_MSB,
-RJ_X_LSB,
+RJ_X_LSB,    // Right X Joystick
 RJ_X_MSB,
-RJ_Y_LSB,
+RJ_Y_LSB,    // Right Y Joystick
 RJ_Y_MSB,
-LJ_Y_LSB,
+LJ_Y_LSB,    // Left Y Joystick
 LY_Y_MSB,
-LJ_X_LSB,
+LJ_X_LSB,    // Left X Joystick
 LJ_X_MSB,
 SWITCH_A_LSB,
 SWITCH_A_MSB,
@@ -63,9 +68,9 @@ SWITCH_C_LSB,
 SWITCH_C_MSB,
 SWITCH_D_LSB,
 SWITCH_D_MSB,
-POTEN_VRA_LSB,
+POTEN_VRA_LSB,    // Potentiometer VRA
 POTEN_VRA_MSB,
-POTEN_VRB_LSB,
+POTEN_VRB_LSB,    // Potentiometer VRB
 POTEN_VRB_MSB,
 ]
 ```
