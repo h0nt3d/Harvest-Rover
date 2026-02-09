@@ -6,6 +6,10 @@
 - PCU - UNB Dev Board (microbit)
 - RCLS - Radio Controlled Laser System
 
+## 3D Components:
+- M3 Size Screws and Washers
+- M3 Size Female to female standoff
+
 
 ## Communication with PCU via payload requests
 
