@@ -1,4 +1,4 @@
-# ECE3232-Rover
+# Harvest Rover
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/prototype_3.jpg?raw=true" width="700">
 
 ## Hardware:
