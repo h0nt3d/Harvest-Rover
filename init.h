@@ -5,6 +5,7 @@
 
 #define DEADZONE 40
 #define RJ_Y_CENTER 0x05DD
+#define LJ_Y_CENTER 0x05DD
 #define MAX_FWD_OFFSET 500
 
 
