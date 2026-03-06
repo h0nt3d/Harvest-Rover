@@ -3,9 +3,12 @@
 void initialize()
 {
     // I/O
-    TRISAbits.TRISA0 = 0; //LED
-    ANSELAbits.ANSA0 = 0;
+    //TRISAbits.TRISA0 = 0; //LED
+    //ANSELAbits.ANSA0 = 0;
 
+    TRISBbits.TRISB0 = 0;
+    ANSELBbits.ANSB0 = 0;
+    
     TRISAbits.TRISA5 = 1; //Button
     ANSELAbits.ANSA5 = 0;
     

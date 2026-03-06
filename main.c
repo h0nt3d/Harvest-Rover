@@ -2,15 +2,25 @@
 #include "init.h"
 #include <xc.h>
 
+#define _XTAL_FREQ 4000000
+
 void main() 
 {    
     initialize();
     send_set_laser_scope();
-    send_shoot_laser();
     while (1) {
+        
+        if (get_flySky_info_buf[14] != 0xE8) {
+            LATBbits.LATB0 = 1;
+        }
+        
+        else {
+            LATBbits.LATB0 = 0;
+        }
+        
         rxCount = 0;
         rxDone  = 0;
-
+        
         send_get_flySky_info();
         while (!rxDone) {}
         
@@ -84,6 +94,9 @@ void main()
             send_motor_settings(0, 0, 0, 0);
         }
         
-        
+        if (get_flySky_info_buf[20] != 0xE8) {
+            send_shoot_laser();
+            __delay_ms(5);
+        }
     }
 }
