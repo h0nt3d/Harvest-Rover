@@ -2,7 +2,7 @@
 #include "init.h"
 #include <xc.h>
 
-#define _XTAL_FREQ 4000000
+#define _XTAL_FREQ 32000000
 
 void main() 
 {    
