@@ -8,14 +8,26 @@ void main()
 {    
     initialize();
     send_set_laser_scope();
+    
+    I2C_Init();
+    APDS9960_Init();
+    APDS9960_Reset();
+    
     while (1) {
         
+        
+        // Solar Array LED
         if (get_flySky_info_buf[14] != 0xE8) {
             LATBbits.LATB0 = 1;
         }
         
         else {
             LATBbits.LATB0 = 0;
+        }
+        
+        // Optical Color Decoder
+        if (get_flySky_info_buf[18] == 0xDC) {
+            APDS9960_ReadColors();
         }
         
         rxCount = 0;

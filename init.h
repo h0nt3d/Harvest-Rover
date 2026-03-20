@@ -19,6 +19,18 @@ void send_motor_settings(uint8_t dirA, uint8_t pwmA, uint8_t dirB, uint8_t pwmB)
 void send_set_laser_scope();
 void send_shoot_laser();
 
+void I2C_Init();
+void APDS9960_Init();
+void APDS9960_Reset();
+
+
+typedef struct {
+    uint16_t red;
+    uint16_t green;
+    uint16_t blue;
+    uint16_t clear;
+} RGBC_t;
+RGBC_t APDS9960_ReadColors();
 
 
 #endif
