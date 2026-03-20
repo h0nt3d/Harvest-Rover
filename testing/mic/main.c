@@ -40,9 +40,9 @@
 #include <stdlib.h>
 
 #define _XTAL_FREQ 32000000 
-#define SAMPLE_COUNT 64
-#define SAMPLE_RATE_HZ 8000
-#define SAMPLE_PERIOD_US 125
+#define SAMPLE_COUNT 128
+#define SAMPLE_RATE_HZ 16000
+#define SAMPLE_PERIOD_US 62
 
 // Global variables
 uint16_t adc_buffer[SAMPLE_COUNT];
