@@ -38,82 +38,101 @@
 // Use project enums instead of #define for ON and OFF.
 
 
+
+
 #include <xc.h>
-#define _XTAL_FREQ 4000000
-#define RC522_CS LATAbits.LATA5
+#include <stdint.h>
+
+#define _XTAL_FREQ 32000000
+
+#define RC522_CS   LATBbits.LATB2
+#define RC522_RST  LATAbits.LATA0
 
 uint8_t RC522_Ver;
 
-void initialize()
+void initialize(void)
 {
-    // Digital pins
-    ANSELCbits.ANSC3 = 0;
-    ANSELCbits.ANSC5 = 0;
-    ANSELCbits.ANSC4 = 0;
-    ANSELAbits.ANSA5 = 0;
-    ANSELAbits.ANSA4 = 0; // Reset
+    // -------------------- Digital mode --------------------
+    ANSELBbits.ANSB2 = 0;   // CS
+    ANSELBbits.ANSB3 = 0;   // SCK
+    ANSELBbits.ANSB4 = 0;   // MOSI
+    ANSELBbits.ANSB5 = 0;   // MISO
+    ANSELAbits.ANSA0 = 0;   // RST
 
-    // Direction
-    TRISCbits.TRISC3 = 0;   // SCK
-    TRISCbits.TRISC5 = 0;   // MOSI
-    TRISCbits.TRISC4 = 1;   // MISO
-    TRISAbits.TRISA5 = 0;   // CS
-    TRISAbits.TRISA4 = 0;   // Reset
+    // -------------------- Directions --------------------
+    TRISBbits.TRISB2 = 0;   // CS output
+    TRISBbits.TRISB3 = 0;   // SCK output
+    TRISBbits.TRISB4 = 0;   // MOSI output
+    TRISBbits.TRISB5 = 1;   // MISO input
+    TRISAbits.TRISA0 = 0;   // RST output
 
-    // PPS
-    SSP1DATPPS = 0x14;  // RC4 -> SDI
-    RC5PPS = 0x15;      // SDO1
-    RC3PPS = 0x14;      // SCK1
+    // -------------------- Default states --------------------
+    RC522_CS  = 1;          // deselect
+    RC522_RST = 1;
 
-    // SPI Master
-    SSP1ADD = 7;
+    // -------------------- PPS --------------------
+    SSP1DATPPS = 0x0D;   // RB5 -> SDI (input)
+    RB4PPS     = 0x15;   // RB4 -> SDO1 (MOSI)
+    RB3PPS     = 0x14;   // RB3 -> SCK1
+
+    // -------------------- SPI setup --------------------
+    SSP1ADD = 63;
     SSP1STATbits.SMP = 1;
     SSP1STATbits.CKE = 1;
     SSP1CON1bits.CKP = 0;
     SSP1CON1bits.SSPM = 0b1010;
     SSP1CON1bits.SSPEN = 1;
 
-    // Reset RC522
-    LATAbits.LATA4 = 0;
+    // -------------------- Reset RC522 --------------------
+    RC522_RST = 0;
     __delay_ms(10);
-    LATAbits.LATA4 = 1;
+    RC522_RST = 1;
     __delay_ms(50);
-
-    RC522_CS = 1;   // deselect
-    
-    
-    
-    // Testing LED
-    ANSELAbits.ANSA0 = 0;
-    TRISAbits.TRISA0 = 0;
 }
 
 uint8_t SPI_WriteByte(uint8_t data)
 {
+    PIR3bits.SSP1IF = 0;
     SSP1BUF = data;
-    while(!SSP1STATbits.BF) {};
+    while (!PIR3bits.SSP1IF) {}
     return SSP1BUF;
 }
 
-uint8_t getVersion()
+uint8_t getVersion(void)
 {
+    uint8_t command;
+
     RC522_CS = 0;
-        
-    uint8_t command = (0x37 << 1) | 0x80;    
-    SPI_WriteByte(command);    // VersionReg read command - Version 82
-    RC522_Ver = SPI_WriteByte(0x00);    // receive version
-    
+
+    //command = (0x37 << 1) | 0x80;
+    SPI_WriteByte((0x37 << 1) | 0x80);
+    RC522_Ver = SPI_WriteByte(0x00);
+
     RC522_CS = 1;
+
+    return RC522_Ver;
 }
 
-void main()
+void main(void)
 {
     initialize();
     __delay_ms(100);
 
-    while(1)
+    
+    while (1)
     {
         getVersion();
         __delay_ms(500);
     }
+    
+    /*
+    while (1)
+    {
+        RC522_CS = 0;
+        SPI_WriteByte(0xAA);
+        SPI_WriteByte(0x55);
+        RC522_CS = 1;
+        __delay_ms(500);
+    }
+    */
 }
