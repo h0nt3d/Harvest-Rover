@@ -46,7 +46,7 @@
 #define _XTAL_FREQ 32000000
 
 #define RC522_CS   LATBbits.LATB2
-#define RC522_RST  LATAbits.LATA0
+#define RC522_RST  LATAbits.LATA1
 
 uint8_t RC522_Ver;
 uint8_t uid[4];
@@ -92,14 +92,14 @@ void initialize(void)
     ANSELBbits.ANSB3 = 0;   // SCK
     ANSELBbits.ANSB4 = 0;   // MOSI
     ANSELBbits.ANSB5 = 0;   // MISO
-    ANSELAbits.ANSA0 = 0;   // RST
+    ANSELAbits.ANSA1 = 0;   // RST
 
     // Directions
     TRISBbits.TRISB2 = 0;   // CS output
     TRISBbits.TRISB3 = 0;   // SCK output
     TRISBbits.TRISB4 = 0;   // MOSI output
     TRISBbits.TRISB5 = 1;   // MISO input
-    TRISAbits.TRISA0 = 0;   // RST output
+    TRISAbits.TRISA1 = 0;   // RST output
 
     RC522_CS  = 1;
     RC522_RST = 1;
