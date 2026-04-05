@@ -1,5 +1,5 @@
 # Harvest Rover
-<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/prototype_3.jpg?raw=true" width="700">
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/prototype_4.jpg?raw=true" width="700">
 
 ## Hardware:
 - [MPLAB Xpress Development Board (PIC16F18855)](https://www.microchip.com/en-us/development-tool/dm164140)
