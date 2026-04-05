@@ -9,7 +9,8 @@
 
 ## Communication with PCU via payload requests
 
-### *Note:*
+Communication is made via UART protocol. Software running on PCU and RCLS is propritary
+
 - **Bytes 1 & 2** - Sync Bytes
 - **Bytes 3 & 4** - Type of Message
 - **Bytes 5 & 6** - Payload Size
