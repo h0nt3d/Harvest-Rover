@@ -33,4 +33,10 @@ typedef struct {
 RGBC_t APDS9960_ReadColors();
 
 
+extern uint8_t uid[4];
+void RFID_initialize();
+void RC522_InitChip();
+uint8_t RC522_ReadUID(uint8_t *uid4);
+
+
 #endif

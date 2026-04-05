@@ -9,9 +9,8 @@ void main()
     initialize();
     send_set_laser_scope();
     
-    I2C_Init();
-    APDS9960_Init();
-    APDS9960_Reset();
+    
+    uint8_t uid[4];
     
     while (1) {
         
@@ -25,8 +24,18 @@ void main()
             LATBbits.LATB0 = 0;
         }
         
+        // RFID
+        if (get_flySky_info_buf[18] == 0xD0) {
+            RFID_initialize();
+            RC522_InitChip();
+            RC522_ReadUID(uid);
+        }
+        
         // Optical Color Decoder
         if (get_flySky_info_buf[18] == 0xDC) {
+            I2C_Init();
+            APDS9960_Init();
+            APDS9960_Reset();
             APDS9960_ReadColors();
         }
         
