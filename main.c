@@ -37,6 +37,11 @@ void main()
             APDS9960_ReadColors();
         }
         
+        if (get_flySky_info_buf[16] != 0xE8) {
+            ADC_Init();
+            SPW_sample();
+        }
+        
         rxCount = 0;
         rxDone  = 0;
         

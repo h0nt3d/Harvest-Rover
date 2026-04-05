@@ -57,19 +57,7 @@ void send_shoot_laser()
 }
 
 void __interrupt() ISR() 
-{
-    /*
-    if (IOCAFbits.IOCAF5 == 1) {
-        
-        rxCount = 0;
-        rxDone = 0;
-        
-        //send_get_pcu_info();
-        send_set_motor_settings();
-        IOCAFbits.IOCAF5 = 0;  // Clear IOC flag
-    }
-    */
-    
+{   
 
     if (PIE3bits.RCIE && PIR3bits.RCIF) {
         // handle overrun

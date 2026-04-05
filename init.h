@@ -39,4 +39,8 @@ void RC522_InitChip();
 uint8_t RC522_ReadUID(uint8_t *uid4);
 
 
+extern volatile uint16_t current_hz;
+void ADC_Init();
+void SPW_sample();
+
 #endif
