@@ -10,8 +10,6 @@ void main()
     send_set_laser_scope();
     
     
-    uint8_t uid[4];
-    
     while (1) {
         
         
