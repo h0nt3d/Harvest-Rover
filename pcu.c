@@ -5,14 +5,25 @@
 volatile uint8_t rxCount = 0;
 volatile uint8_t rxDone = 0;
 
+volatile uint8_t set_pcu_info[9] = {0xFE, 0x19, 0x03, 0x04, 0x03, 0x00, 0x02, 0x06, 1};
 volatile uint8_t get_pcu_info[6] = {0xFE, 0x19, 0x01, 0x04, 0x00, 0x00};
 volatile uint8_t get_flySky_info[6] = {0xFE, 0x19, 0x01, 0x05, 0x00, 0x00};
 volatile uint8_t set_motor_settings[10] = {0xFE, 0x19, 0x01, 0x06, 0x04, 0x00, 0x01, 80, 0x01, 80};
 volatile uint8_t set_laser_scope[7] = {0xFE, 0x19, 0x01, 0x08, 0x01, 0x00, 1};
 volatile uint8_t shoot_laser[7] = {0xFE, 0x19, 0x01, 0x09, 0x01, 0x00, 1};
+volatile uint8_t request_repair[6] = {0xFE, 0x19, 0x03, 0x09, 0x00, 0x00};
+volatile uint8_t transmit_repair[6] = {0xFE, 0x19, 0x04, 0x09, 0x00, 0x00};
 
 volatile uint8_t get_pcu_info_buf[12];
 volatile uint8_t get_flySky_info_buf[26];
+
+void send_set_pcu_info()
+{
+    for (int i = 0; i < 9; i++) {
+        TX1REG = set_pcu_info[i];
+        while (!TX1STAbits.TRMT) {} // wait until register is empty
+    }
+}
 
 void send_get_pcu_info()
 {
@@ -40,6 +51,24 @@ void send_motor_settings(uint8_t dirA, uint8_t pwmA, uint8_t dirB, uint8_t pwmB)
     }
 }
 
+void send_surface_exploration(uint16_t task_id, uint16_t task_value)
+{
+    uint8_t msg[10] = {
+        0xFE, 0x19,
+        0x01, 0x0A,
+        0x04, 0x00,
+        (uint8_t)(task_id & 0xFF),
+        (uint8_t)((task_id >> 8) & 0xFF),
+        (uint8_t)(task_value & 0xFF),
+        (uint8_t)((task_value >> 8) & 0xFF)
+    };
+
+    for (uint8_t i = 0; i < 10; i++) {
+        TX1REG = msg[i];
+        while (!TX1STAbits.TRMT) {}
+    }
+}
+
 void send_set_laser_scope() 
 {
     for (int i = 0; i < 7; i++) {
@@ -52,6 +81,22 @@ void send_shoot_laser()
 {
     for (int i = 0; i < 7; i++) {
         TX1REG = shoot_laser[i];
+        while (!TX1STAbits.TRMT) {} // wait until register is empty
+    }
+}
+
+void send_request_repair() 
+{
+    for (int i = 0; i < 6; i++) {
+        TX1REG = request_repair[i];
+        while (!TX1STAbits.TRMT) {} // wait until register is empty
+    }
+}
+
+void send_transmit_repair() 
+{
+    for (int i = 0; i < 6; i++) {
+        TX1REG = transmit_repair[i];
         while (!TX1STAbits.TRMT) {} // wait until register is empty
     }
 }

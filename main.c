@@ -4,9 +4,15 @@
 
 #define _XTAL_FREQ 32000000
 
+int sendRFID_flag = 0;
+int sendFreq_flag = 0;
+int get_pcu_info_flag = 0;
+
 void main() 
 {    
+    
     initialize();
+    send_set_pcu_info();
     send_set_laser_scope();
     
     
@@ -37,9 +43,27 @@ void main()
             APDS9960_ReadColors();
         }
         
+        // Microphone
         if (get_flySky_info_buf[16] != 0xE8) {
             ADC_Init();
             SPW_sample();
+        }
+        
+        // RFID Transmission
+        uint16_t VRA = ((uint16_t)get_flySky_info_buf[23] << 8) | (uint16_t)get_flySky_info_buf[22];
+        if (VRA > 1200) {
+            uint16_t rfid_lsb2 = ((uint16_t)uid[2] << 8) | uid[3];
+            send_surface_exploration(1, rfid_lsb2);
+            sendRFID_flag = 1;
+            __delay_ms(200);
+        }
+        
+        // Frequency Transmission
+        uint16_t VRB = ((uint16_t)get_flySky_info_buf[25] << 8) | (uint16_t)get_flySky_info_buf[24];
+        if (VRB > 1200) {
+            send_surface_exploration(2, current_hz);
+            sendFreq_flag = 1;
+            __delay_ms(200);
         }
         
         rxCount = 0;
@@ -122,5 +146,22 @@ void main()
             send_shoot_laser();
             __delay_ms(5);
         }
+        
+        if (get_flySky_info_buf[10] == 0xD0) {
+            send_get_pcu_info();
+            get_pcu_info_flag = 1;
+            __delay_ms(100);
+        }
+        
+        if (get_flySky_info_buf[7] == 0x03) {
+            send_request_repair();
+            __delay_ms(5);
+        }
+        
+        if (get_flySky_info_buf[7] == 0x07) {
+            send_transmit_repair();
+            __delay_ms(5);
+        }
+        
     }
 }
