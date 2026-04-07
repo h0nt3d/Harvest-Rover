@@ -6,10 +6,15 @@
 - [Snap Programmer](https://www.microchip.com/en-us/development-tool/pg164100)
 - PCU - [(microbit)](https://microbit.org/buy/) (Proprietary)
 - RCLS - [dsPIC33CK128MP205](https://www.digikey.ca/en/products/detail/microchip-technology/DSPIC33CK128MP205-I-PT/9342075) (Proprietary)
+- RFID Reader - [RC522 RFID MODULE](https://www.digikey.ca/en/products/detail/sunfounder/CN0090/18668629?s=N4IgTCBcDaICxwIyILQGEByAGLBOLKGAIiALoC%2BQA)
+- Color Sensor - [APDS-9960 - Light, Ambient Sensor Evaluation Board](https://www.digikey.ca/en/products/detail/adafruit-industries-llc/3595/7652603?s=N4IgTCBcDaIIwFYwA4C0YDMBOBqByAIiALoC%2BQA)
+- Speaker - [Passive Buzzer](https://www.mouser.com/ProductDetail/Seeed-Studio/107020109?qs=GedFDFLaBXFNSeAbVfqSzw%3D%3D)
+- Microphone - [SPW2430 - MEMS Omnidirectional Microphones Audio Evaluation Board](https://www.digikey.ca/en/products/detail/adafruit-industries-llc/2716/5604375?s=N4IgTCBcDaIIwFYwA4C0cDMA2MqByAIiALoC%2BQA)
+- Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
 
 ## Communication with PCU via payload requests
 
-Communication is made via UART protocol. Software running on PCU and RCLS is propritary
+Communication is made to PCU via UART protocol.
 
 - **Bytes 1 & 2** - Sync Bytes
 - **Bytes 3 & 4** - Type of Message
