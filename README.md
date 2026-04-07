@@ -209,3 +209,8 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 | 8       | Switch D         | Laser Toggle                                                              | Turns on auto firing laser.                                                      |
 | 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
 | 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
+
+# Subsystems
+
+## RFID Sequence
+
