@@ -41,10 +41,11 @@ This rover is specifically designed to complete 4 tasks:
 - [MPLAB X IDE](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
 
 
-# Initialization
+# Setup
 1. Create a new Project in the MPLAB X IDE
 2. Select the PIC16F18855 microcontroller
 3. Create new source files in the project directory using repository files
+4. Compile and flash with debugger when ready
 
 Communication is made to PCU via UART protocol.
 
