@@ -35,6 +35,40 @@ This rover is specifically designed to complete 4 tasks:
 
 Communication is made to PCU via UART protocol.
 
+### Initialization
+The UART Module and Interrupts are initialized for asynchronous serial communication:
+
+Clock Frequency = 32Mhz
+
+\[
+\text{Baud Rate} = \frac{F_{osc}}{4 \times (SP1BRG + 1)}
+\]
+
+\[
+SP1BRG = \frac{F_{osc}}{4 \times \text{Baud Rate}} - 1
+\]
+
+SP1BRG = 68
+
+```c
+TX1STAbits.SYNC = 0; // Async Mode
+
+TX1STAbits.BRGH = 1; // High-speed baud rate
+BAUD1CONbits.BRG16 = 1;
+
+TX1STAbits.TXEN = 1; // Transmitter and Receiver enabled
+RC1STAbits.SPEN = 1;    
+RC1STAbits.CREN = 1;
+
+SP1BRGH = 68 // Baud Rate for 115200
+
+// Enable interrupts
+PEIE = 1;
+GIE = 1;
+PIR3bits.RCIF = 0;
+PIE3bits.RCIE = 1;
+```
+
 - **Bytes 1 & 2** - Sync Bytes
 - **Bytes 3 & 4** - Type of Message
 - **Bytes 5 & 6** - Payload Size
