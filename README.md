@@ -236,14 +236,14 @@ Using SPI communication, the RC522 antenna is turned on so that it can detect ne
 Using I2C communication, the APDS9960 color sensor is initialized and reads red, green, blue and clear loght values from its registers. The sensor data is combined into 16-bit values for each color channel. Based on the dominant color, a note from the buzzer is then played.
 - Red - C4
 - Green - F4
-- Blue - A4
+- Blue - A4 <br>
 [optical.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/optical.c)
 
 ## Solar Array
 The Solar Array Activation module is designed to provide sufficient illumination to a solar panel to charge it. It uses a C512A-WNN-CZ0B0151-ND LED and a 2N7000 MOSFET to drive voltage making the LED brighter. After directing sufficient light to the panel, its connected gate will open.
 
 ## Alien Frequency
-The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy.
+The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy. <br>
 [microphone.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/microphone.c)
 
 
