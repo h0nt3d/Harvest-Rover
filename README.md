@@ -1,6 +1,24 @@
 # Harvest Rover
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/prototype_4.jpg?raw=true" width="700">
 
+The Harvest Rover is a small embedded system designed to participate in a competition known as *The Harvest*. During the competition, Rovers will participate by completing various tasks. These include:
+- RFID Sequence 
+- Optical Signal Decoding
+- Environmental Remediation
+- Solar Array
+- Laser Turret
+- Magnetic Anomaly
+- Autonomous Line
+- Alien Frequency
+- Electrical Conductivity
+- IR Detection
+
+This rover is specifically designed to complete 4 tasks:
+- RFID Sequence
+- Optical Signal Decoding
+- Solar Array
+- Alien Frequency
+
 ## Hardware:
 - [MPLAB Xpress Development Board (PIC16F18855)](https://www.microchip.com/en-us/development-tool/dm164140)
 - [Snap Programmer](https://www.microchip.com/en-us/development-tool/pg164100)
@@ -45,6 +63,15 @@ REPAIR_FLAG
 ]
 ```
 
+### **Set PCU Info Command**  <br>
+```c
+volatile uint8_t set_pcu_info[9] = {0xFE, 0x19, 0x03, 0x04, 0x03, 0x00, TEAM_ID (##h), PLAYER_ID (##h), DEVICE_ID (##h)};
+```
+- TEAM_ID - Team number in hexadecimal
+- PLAYER_ID - Group number in hexadecimal
+- DEVICE_ID - 1 for Rover, 2 for Harvester
+
+
 ### **Get Flysky Info Command / Get User Data Command**  <br>
 ```c
 volatile uint8_t get_flySky_info[6] = {0xFE, 0x19, 0x01, 0x05, 0x00, 0x00};
@@ -68,7 +95,7 @@ LJ_Y_LSB,    // Left Y Joystick
 LY_Y_MSB,
 LJ_X_LSB,    // Left X Joystick
 LJ_X_MSB,
-SWITCH_A_LSB,
+SWITCH_A_LSB, // Switches
 SWITCH_A_MSB,
 SWITCH_B_LSB,
 SWITCH_B_MSB,
@@ -82,6 +109,45 @@ POTEN_VRB_LSB,    // Potentiometer VRB
 POTEN_VRB_MSB,
 ]
 ```
+
+### **Set Motor Settings Command**  <br>
+```c
+volatile uint8_t set_motor_settings[10] = {0xFE, 0x19, 0x01, 0x06, 0x04, 0x00, DIRA, PWMA, DIRB, PWMB};
+```
+- DIRA - Motor A Directions: 0 - Brake, 1 - Forward,  2 - Backward
+- DIRB - Motor B Directions:
+- PWMA - Pulse Width Modulation A: 0 - 100
+- PWMB - Pulse Width Modulation B
+
+### **Set Laser Scope Command**  <br>
+```c
+volatile uint8_t set_laser_scope[7] = {0xFE, 0x19, 0x01, 0x08, 0x01, 0x00, ENABLE};
+```
+- ENABLE - 1 or 0 (On or Off)
+
+### **Shoot Laser Command**  <br>
+```c
+volatile uint8_t shoot_laser[7] = {0xFE, 0x19, 0x01, 0x09, 0x01, 0x00, TYPE};
+```
+- TYPE - 1 or 2 (Low Caliber or High Caliber)
+
+### **Shoot Laser (Request Repair Code)**  <br>
+```c
+volatile uint8_t request_repair[6] = {0xFE, 0x19, 0x03, 0x09, 0x00, 0x00};
+```
+
+### **Shoot Laser (Transmit Repair Code)**  <br>
+```c
+volatile uint8_t transmit_repair[6] = {0xFE, 0x19, 0x04, 0x09, 0x00, 0x00};
+```
+
+### **Surface Exploration Command**  <br>
+```c
+volatile uint8_t send_surface_exploration[10] = {0xFE, 0x19, 0x01, 0x0A, 0x04, 0x00, TASK_ID_LSB, TASK_ID_MSB, TASK_SPECIFIC_VALUE_LSB, TASK_SPECIFIC_VALUE_MSB};
+```
+Task IDs:
+- 1 - RFID
+- 2 - Fundamental Frequency
 
 # Flysky Controls
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
