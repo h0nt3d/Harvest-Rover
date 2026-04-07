@@ -35,9 +35,9 @@ This rover is specifically designed to complete 4 tasks:
 Communication is made to PCU via UART protocol.
 
 # Initialization
-The UART Module and Interrupts are initialized for asynchronous serial communication:
+The UART Module and Interrupts are initialized for asynchronous serial communication.
 
-Clock Frequency = 32Mhz
+**Clock Frequency = 32Mhz**
 
 
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="400">
