@@ -233,7 +233,7 @@ Using SPI communication, the RC522 antenna is turned on so that it can detect ne
 [rfid.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/rfid.c)
 
 ## Optical Signal Decoding
-Using I2C communication, the APDS9960 color sensor is initialized and reads red, green, blue and clear light values from its registers. The sensor data is combined into 16-bit values for each color channel. Based on the dominant color, a note from the buzzer is then played.
+Using I2C communication, the APDS9960 color sensor is initialized and reads red, green, blue and clear light values from its registers. The sensor data is combined into 16-bit values for each color channel. Based on the dominant color, a note from the buzzer is played.
 - Red - C4
 - Green - F4
 - Blue - A4 <br>
