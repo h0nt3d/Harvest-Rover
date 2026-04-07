@@ -1,5 +1,5 @@
 # Harvest Rover
-<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/prototype_4.jpg?raw=true" width="700">
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/banner.png?raw=true" width="700">
 
 The Harvest Rover is a small embedded system designed to participate in a competition known as *The Harvest*. During the competition, Rovers will participate by completing various tasks. These include:
 - RFID Sequence 
