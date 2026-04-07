@@ -1,5 +1,5 @@
 # Harvest Rover
-<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/banner.png?raw=true" width="700">
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/banner.png?raw=true" width="800">
 
 The Harvest Rover is a small embedded system designed to participate in a competition known as *The Harvest*. During the competition, Rovers will participate by completing various tasks. These include:
 - RFID Sequence 
@@ -31,22 +31,16 @@ This rover is specifically designed to complete 4 tasks:
 - Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
 - Flysky transmitter and receiver
 
-# Communication with PCU via payload messages
 
 Communication is made to PCU via UART protocol.
 
-### Initialization
+# Initialization
 The UART Module and Interrupts are initialized for asynchronous serial communication:
 
 Clock Frequency = 32Mhz
 
-\[
-\text{Baud Rate} = \frac{F_{osc}}{4 \times (SP1BRG + 1)}
-\]
 
-\[
-SP1BRG = \frac{F_{osc}}{4 \times \text{Baud Rate}} - 1
-\]
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="700">
 
 SP1BRG = 68
 
@@ -68,6 +62,8 @@ GIE = 1;
 PIR3bits.RCIF = 0;
 PIE3bits.RCIE = 1;
 ```
+
+# Communication with PCU via payload messages
 
 - **Bytes 1 & 2** - Sync Bytes
 - **Bytes 3 & 4** - Type of Message
