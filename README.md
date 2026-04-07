@@ -29,6 +29,8 @@ This rover is specifically designed to complete 4 tasks:
 - Speaker - [Passive Buzzer](https://www.mouser.com/ProductDetail/Seeed-Studio/107020109?qs=GedFDFLaBXFNSeAbVfqSzw%3D%3D)
 - Microphone - [SPW2430 - MEMS Omnidirectional Microphones Audio Evaluation Board](https://www.digikey.ca/en/products/detail/adafruit-industries-llc/2716/5604375?s=N4IgTCBcDaIIwFYwA4C0cDMA2MqByAIiALoC%2BQA)
 - Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
+- Bright LED - [C512A-WNN-CZ0B0151-ND](https://www.digikey.ca/en/products/detail/creeled-inc/C512A-WNN-CZ0B0151/2809629?s=N4IgTCBcDaIMIFYCMYCCBaA6gOW%2BuAWgAwBCRSy62AIiALoC%2BQA)
+- Driving MOSFET - [2N7000FS-ND](https://www.digikey.ca/en/products/detail/onsemi/2N7000/244278?s=N4IgTCBcDa4HIHYAMKBiBlAtHAIiAugL5A)
 - Flysky transmitter and receiver
 
 
@@ -224,6 +226,27 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 }
 ```
 
+# Subsystems
+
+## RFID Sequence
+Using SPI communication, the RC522 antenna is turned on so that it can detect nearby RFID tags. A request (REQA) command is sent to check if any RFID card is present. If present, it responds with an ATQA (Answer to Request). An anti-collision command is sent to retrieve the card's UID. Error Checking is finally done to verify the UID of the card. <br>
+[rfid.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/rfid.c)
+
+## Optical Signal Decoding
+Using I2C communication, the APDS9960 color sensor is initialized and reads red, green, blue and clear loght values from its registers. The sensor data is combined into 16-bit values for each color channel. Based on the dominant color, a note from the buzzer is then played.
+- Red - C4
+- Green - F4
+- Blue - A4
+[optical.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/optical.c)
+
+## Solar Array
+The Solar Array Activation module is designed to provide sufficient illumination to a solar panel to charge it. It uses a C512A-WNN-CZ0B0151-ND LED and a 2N7000 MOSFET to drive voltage making the LED brighter. After directing sufficient light to the panel, its connected gate will open.
+
+## Alien Frequency
+The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy.
+[microphone.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/microphone.c)
+
+
 # Flysky Controls
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
 
@@ -240,7 +263,5 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 | 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
 | 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
 
-# Subsystems
 
-## RFID Sequence
 
