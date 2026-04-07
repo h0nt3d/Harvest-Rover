@@ -402,6 +402,7 @@ The Flysky transmitter acts as the main interface for switching between sensing 
 | 8       | Switch D         | Laser Toggle                                                              | Turns on auto firing laser.                                                      |
 | 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
 | 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
+
 *Table 1 - Flysky controls*
 
 
