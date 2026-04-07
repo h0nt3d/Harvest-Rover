@@ -229,21 +229,139 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 # Subsystems
 
 ## RFID Sequence
-Using SPI communication, the RC522 antenna is turned on so that it can detect nearby RFID tags. A request (REQA) command is sent to check if any RFID card is present. If present, it responds with an ATQA (Answer to Request). An anti-collision command is sent to retrieve the card's UID. Error Checking is finally done to verify the UID of the card. <br>
+Using SPI communication, the RC522 antenna is turned on so that it can detect nearby RFID tags. A request (REQA) command is sent to check if any RFID card is present. If present, it responds with an ATQA (Answer to Request). An anti-collision command is sent to retrieve the card's UID. Error Checking is finally done to verify the UID of the card. 
+```c
+uint8_t RC522_Anticollision(uint8_t *uid4, uint8_t *bcc)
+{
+    uint8_t cmd[2] = { PICC_ANTICOLL, PICC_ANTICOLL_NV };
+    uint8_t resp[5];
+    uint8_t bitLen = 0;
+    uint8_t status;
+    uint8_t calcBcc;
+
+    status = RC522_Transceive(cmd, 2, resp, &bitLen, 0x00);
+    if (status != RC522_OK) return status;
+
+    if (bitLen != 40) return RC522_ERR_PROTOCOL;
+
+    uid4[0] = resp[0];
+    uid4[1] = resp[1];
+    uid4[2] = resp[2];
+    uid4[3] = resp[3];
+    *bcc    = resp[4];
+
+    calcBcc = uid4[0] ^ uid4[1] ^ uid4[2] ^ uid4[3];
+    if (calcBcc != *bcc) return RC522_ERR_BCC;
+
+    return RC522_OK;
+}
+```
 [rfid.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/rfid.c)
 
 ## Optical Signal Decoding
 Using I2C communication, the APDS9960 color sensor is initialized and reads red, green, blue and clear light values from its registers. The sensor data is combined into 16-bit values for each color channel. Based on the dominant color, a note from the buzzer is played.
 - Red - C4
 - Green - F4
-- Blue - A4 <br>
+- Blue - A4
+```c
+void DelayMicroseconds(uint16_t us) 
+{
+    while(us--) {
+        NOP();
+        NOP();
+        NOP();
+        NOP();
+    }
+}
+
+void PlayC4(uint16_t duration_ms)
+{
+    ANSELBbits.ANSB1 = 0;
+    TRISBbits.TRISB1 = 0;
+
+    uint16_t half_period = 1104;
+    uint32_t cycles = ((uint32_t)duration_ms * 1000UL) / (half_period * 2UL);
+
+    for (uint32_t i = 0; i < cycles; i++) {
+        LATBbits.LATB1 = 1;
+        DelayMicroseconds(half_period);
+
+        LATBbits.LATB1 = 0;
+        DelayMicroseconds(half_period);
+    }
+}
+```
 [optical.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/optical.c)
 
 ## Solar Array
 The Solar Array Activation module is designed to provide sufficient illumination to a solar panel to charge it. It uses a C512A-WNN-CZ0B0151-ND LED and a 2N7000 MOSFET to drive voltage making the LED brighter. After directing sufficient light to the panel, its connected gate will open.
 
 ## Alien Frequency
-The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy. <br>
+The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy.
+```c
+void SPW_sample() {
+    uint8_t i, tau;
+    uint32_t sum = 0;
+    int16_t mean;
+    
+    for (i = 0; i < SAMPLE_COUNT; i++) {
+        adc_buffer[i] = ADC_Read();
+        sum += adc_buffer[i];
+        __delay_us(SAMPLE_PERIOD_US);
+    }
+    mean = (int16_t)(sum / SAMPLE_COUNT);
+
+    uint16_t max_val = 0;
+    uint16_t min_val = 1023;
+    for (i = 0; i < SAMPLE_COUNT; i++) {
+        if (adc_buffer[i] > max_val) max_val = adc_buffer[i];
+        if (adc_buffer[i] < min_val) min_val = adc_buffer[i];
+    }
+
+    if ((max_val - min_val) < MIN_PEAK_AMPLITUDE) {
+        current_hz = 0;
+        LATAbits.LATA1 = 0;
+        __delay_ms(50);
+        //continue;
+    }
+
+    // AMDF Analysis
+    uint8_t found_tau = 0;
+    uint32_t s_prev, s_curr, s_next;
+
+    s_prev = compute_amdf(MIN_TAU - 1, mean);
+    s_curr = compute_amdf(MIN_TAU, mean);
+
+    for (tau = MIN_TAU; tau < MAX_TAU; tau++) {
+        s_next = compute_amdf(tau + 1, mean);
+
+        if (s_curr < s_prev && s_curr <= s_next) {
+            // Depth check
+            if ((s_prev - s_curr) > (s_curr / LOCAL_MIN_MARGIN_DIV)) {
+                found_tau = tau;
+
+                // Parabolic Interpolation for Sub-Integer Accuracy
+                float delta = (float)((int32_t)s_prev - (int32_t)s_next) /
+                              (2.0f * (float)(s_prev + s_next - 2 * s_curr));
+
+                float exact_tau = (float)found_tau + delta;
+                current_hz =
+                    (uint16_t)((float)SAMPLE_RATE_HZ / exact_tau) - 110;
+                if (current_hz > 1000 && current_hz < 2000)
+                    current_hz -= 100;
+                else if (current_hz > 2000 && current_hz < 3000)
+                    current_hz -= 350;
+                else if (current_hz > 3000)
+                    current_hz -= 500;
+                break;
+            }
+        }
+        s_prev = s_curr;
+        s_curr = s_next;
+    }
+    __delay_ms(20);
+}
+```
 [microphone.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/microphone.c)
 
 
