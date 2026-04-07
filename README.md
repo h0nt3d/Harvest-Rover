@@ -31,7 +31,7 @@ This rover is specifically designed to complete 4 tasks:
 - Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
 - Flysky transmitter and receiver
 
-# Communication with PCU via payload requests
+# Communication with PCU via payload messages
 
 Communication is made to PCU via UART protocol.
 
