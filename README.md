@@ -47,10 +47,9 @@ This rover is specifically designed to complete 4 tasks:
 3. Create new source files in the project directory using repository files
 4. Compile and flash with debugger when ready
 
-Communication is made to PCU via UART protocol.
 
 # Initialization
-The UART Module and Interrupts are initialized for asynchronous serial communication.
+Communication is made to PCU via UART protocol. The UART Module and Interrupts are initialized for asynchronous serial communication.
 
 **Clock Frequency = 32Mhz**
 
