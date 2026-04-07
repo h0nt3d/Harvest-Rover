@@ -19,7 +19,7 @@ This rover is specifically designed to complete 4 tasks:
 - Solar Array
 - Alien Frequency
 
-## Hardware:
+# Hardware:
 - [MPLAB Xpress Development Board (PIC16F18855)](https://www.microchip.com/en-us/development-tool/dm164140)
 - [Snap Programmer](https://www.microchip.com/en-us/development-tool/pg164100)
 - PCU - [(microbit)](https://microbit.org/buy/) (Proprietary)
@@ -31,13 +31,24 @@ This rover is specifically designed to complete 4 tasks:
 - Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
 - Flysky transmitter and receiver
 
-## Communication with PCU via payload requests
+# Communication with PCU via payload requests
 
 Communication is made to PCU via UART protocol.
 
 - **Bytes 1 & 2** - Sync Bytes
 - **Bytes 3 & 4** - Type of Message
 - **Bytes 5 & 6** - Payload Size
+
+### Usage Example:
+```c
+void send_set_pcu_info()
+{
+    for (int i = 0; i < 9; i++) {
+        TX1REG = set_pcu_info[i];
+        while (!TX1STAbits.TRMT) {} // wait until register is empty
+    }
+}
+```
 
 ### **Get PCU Info Command**  <br>
 ```c
@@ -119,6 +130,19 @@ volatile uint8_t set_motor_settings[10] = {0xFE, 0x19, 0x01, 0x06, 0x04, 0x00, D
 - PWMA - Pulse Width Modulation A: 0 - 100
 - PWMB - Pulse Width Modulation B
 
+### Special Usage: 
+```c
+void send_motor_settings(uint8_t dirA, uint8_t pwmA, uint8_t dirB, uint8_t pwmB)
+{
+    uint8_t msg[10] = {0xFE, 0x19, 0x01, 0x06, 0x04, 0x00, dirA, pwmA, dirB, pwmB};
+
+    for (uint8_t i = 0; i < 10; i++) {
+        TX1REG = msg[i];
+        while (!TX1STAbits.TRMT) {}
+    }
+}
+```
+
 ### **Set Laser Scope Command**  <br>
 ```c
 volatile uint8_t set_laser_scope[7] = {0xFE, 0x19, 0x01, 0x08, 0x01, 0x00, ENABLE};
@@ -143,11 +167,32 @@ volatile uint8_t transmit_repair[6] = {0xFE, 0x19, 0x04, 0x09, 0x00, 0x00};
 
 ### **Surface Exploration Command**  <br>
 ```c
-volatile uint8_t send_surface_exploration[10] = {0xFE, 0x19, 0x01, 0x0A, 0x04, 0x00, TASK_ID_LSB, TASK_ID_MSB, TASK_SPECIFIC_VALUE_LSB, TASK_SPECIFIC_VALUE_MSB};
+volatile uint8_t set_surface_exploration[10] = {0xFE, 0x19, 0x01, 0x0A, 0x04, 0x00, TASK_ID_LSB, TASK_ID_MSB, TASK_SPECIFIC_VALUE_LSB, TASK_SPECIFIC_VALUE_MSB};
 ```
 Task IDs:
 - 1 - RFID
 - 2 - Fundamental Frequency
+
+### Special Usage: 
+```c
+void send_surface_exploration(uint16_t task_id, uint16_t task_value)
+{
+    uint8_t msg[10] = {
+        0xFE, 0x19,
+        0x01, 0x0A,
+        0x04, 0x00,
+        (uint8_t)(task_id & 0xFF),
+        (uint8_t)((task_id >> 8) & 0xFF),
+        (uint8_t)(task_value & 0xFF),
+        (uint8_t)((task_value >> 8) & 0xFF)
+    };
+
+    for (uint8_t i = 0; i < 10; i++) {
+        TX1REG = msg[i];
+        while (!TX1STAbits.TRMT) {}
+    }
+}
+```
 
 # Flysky Controls
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
