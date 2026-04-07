@@ -40,7 +40,7 @@ The UART Module and Interrupts are initialized for asynchronous serial communica
 Clock Frequency = 32Mhz
 
 
-<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="700">
+<img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="500">
 
 SP1BRG = 68
 
