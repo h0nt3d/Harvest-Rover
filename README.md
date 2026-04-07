@@ -196,8 +196,6 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 
 # Flysky Controls
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
- Outer pipes Cell padding
-
 | Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
 | ------- | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | 1       | Right Joystick Y | Forward / Back                                                            | Moves Forward or Backward.                                                       |
