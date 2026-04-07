@@ -196,3 +196,21 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 
 # Flysky Controls
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
+ Outer pipes Cell padding
+
+| Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
+| ------- | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| 1       | Right Joystick Y | Forward / Back                                                            | Moves Forward or Backward.                                                       |
+| 2       | Right Joystick X | Request Repair Code and Transmit Repair Code                              | Furthest Left to request repair code and Furthest Right to transmit repair code. |
+| 3       | Left Joystick Y  | Get User Info                                                             | Request User Info                                                                |
+| 4       | Left Joystick X  | Left / Right                                                              | Turns Left or Right (Skid Steering).                                             |
+| 5       | Switch A         | Solar Array Toggle                                                        | Turns on LED for Solar Array                                                     |
+| 6       | Switch B         | Frequency Capture                                                         | Starts audio recording for signal frequency capture.                             |
+| 7       | Switch C (3-pos) | Pos 1 – Idle (No function) 
+
+Pos 2 – Optical Decoding 
+
+Pos 3 – RFID Gate | Switches between idle, Optical Decoding and RFID Gate                            |
+| 8       | Switch D         | Laser Toggle                                                              | Turns on auto firing laser.                                                      |
+| 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
+| 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
