@@ -229,7 +229,13 @@ void send_surface_exploration(uint16_t task_id, uint16_t task_value)
 # Subsystems
 
 ## RFID Sequence
-Using SPI communication, the RC522 antenna is turned on so that it can detect nearby RFID tags. A request (REQA) command is sent to check if any RFID card is present. If present, it responds with an ATQA (Answer to Request). An anti-collision command is sent to retrieve the card's UID. Error Checking is finally done to verify the UID of the card. 
+Using SPI communication, the RC522 antenna is turned on so that it can detect nearby RFID tags. A request (REQA) command is sent to check if any RFID card is present. If present, it responds with an ATQA (Answer to Request). An anti-collision command is sent to retrieve the card's UID. Error Checking is finally done to verify the UID of the card. <br>
+**SPI Pins:**
+- CS - RB2
+- SCK - RB3
+- MOSI - RB4
+- MISO - RB5
+- RST - RA1
 ```c
 uint8_t RC522_Anticollision(uint8_t *uid4, uint8_t *bcc)
 {
@@ -263,6 +269,9 @@ Using I2C communication, the APDS9960 color sensor is initialized and reads red,
 - Red - C4
 - Green - F4
 - Blue - A4
+**I2C Pins:**
+  - SCL - RC3
+  - SDA - RC4
 ```c
 void DelayMicroseconds(uint16_t us) 
 {
@@ -294,10 +303,12 @@ void PlayC4(uint16_t duration_ms)
 [optical.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/optical.c)
 
 ## Solar Array
-The Solar Array Activation module is designed to provide sufficient illumination to a solar panel to charge it. It uses a C512A-WNN-CZ0B0151-ND LED and a 2N7000 MOSFET to drive voltage making the LED brighter. After directing sufficient light to the panel, its connected gate will open.
+The Solar Array Activation module is designed to provide sufficient illumination to a solar panel to charge it. It uses a C512A-WNN-CZ0B0151-ND LED and a 2N7000 MOSFET to drive voltage making the LED brighter. After directing sufficient light to the panel, its connected gate will open. <br>
+**LED Controlling Pin:** RB0
 
 ## Alien Frequency
-The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy.
+The PIC measures an input signal from the SPW2430 mic using the ADC and stores 128 samples at a fixed sampling rate. It then calculates the average signal level and checks the signal amplitued to make sure a valid waveform is present. To find fundamental frequency, an AMDF (Amplitude Magnitude Difference Function) is used. It compares the signal to delayed versions of itself over a range of **tau**, and looks for the first strong minimum. A small parabolic interpolation is then applied to improve accuracy. <br>
+**Analog Input Pin:** RA0
 ```c
 void SPW_sample() {
     uint8_t i, tau;
