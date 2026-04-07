@@ -380,6 +380,7 @@ void SPW_sample() {
 # Flysky Controls
 The Flysky transmitter acts as the main interface for switching between sensing modes, movement and communication tasks. <br>
 [main.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/main.c)
+
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
 
 | Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
