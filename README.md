@@ -36,6 +36,10 @@ This rover is specifically designed to complete 4 tasks:
 - [Saleae Logic Analyzer](https://www.amazon.ca/Logic-Black-Compatible-Ultra-Portable-Frustration/dp/B0749G85W2?source=ps-sl-shoppingads-lpcontext&psc=1&smid=A1UJUJY5V4HL51)
 - [Flysky transmitter and receiver](https://www.amazon.ca/FS-i6-Transmitter-Receiver-FS-iA6B-Multirotor/dp/B0BRXSH4GZ?dib=eyJ2IjoiMSJ9.16ma_ytwLV5lHwIYSernybzKBm8Z85JCqtjxeHEqOhqIljZfvtulvHIDqG7ghYo-PpET2V8Haxa8JZQnTg9Smqxkqaf-dgzll2qtinbSof8KghYBrSnOurPqSaTo-5nXPXQGPG2wTlP5UF3v7BusKHoLcJWwCCZ-Ba7CrMjuKijHVMbpDg8UoHgo08imXRVWI-xiKb_0KDa01QJbHshEwD294YwzC9sDGPznktQ2E8I8voBogp5FrEND03aojrSGcyiEEnmFV3fsZOdYKWKXLBU66RG-e-ayPdj7OnRj_NQ.0SwYRXFKrN-C3YhNtB-G6acSH_YEwxvLrXPCtC4unIQ&dib_tag=se&keywords=Flysky&qid=1775529181&sr=8-8)
 
+# Software:
+- MPLAB XC8 Compiler
+- MPLAB X IDE
+
 
 Communication is made to PCU via UART protocol.
 
