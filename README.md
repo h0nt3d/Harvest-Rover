@@ -388,9 +388,11 @@ The Flysky transmitter acts as the main interface for switching between sensing 
 
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/rover.gif?raw=true" alt="Sample Image" width="300" height="300">
 
+*Figure 3 - Rover Movement Demo*
+
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
 
-*Figure 3 - Flysky Diagram*
+*Figure 4 - Flysky Diagram*
 
 | Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
 | ------- | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
