@@ -1,6 +1,8 @@
 # Harvest Rover
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/banner.png?raw=true" width="800">
 
+*Figure 1 - Rover Image*
+
 The Harvest Rover is a small embedded system designed to participate in a competition known as *The Harvest*. During the competition, Rovers will participate by completing various tasks. These include:
 - RFID Sequence 
 - Optical Signal Decoding
@@ -44,6 +46,8 @@ The UART Module and Interrupts are initialized for asynchronous serial communica
 
 
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="400">
+
+*Figure 2 - Baud Rate Formula*
 
 SP1BRG = 68
 
@@ -384,6 +388,8 @@ The Flysky transmitter acts as the main interface for switching between sensing 
 
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
 
+*Figure 3 - Flysky Diagram*
+
 | Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
 | ------- | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | 1       | Right Joystick Y | Forward / Back                                                            | Moves Forward or Backward.                                                       |
@@ -396,6 +402,6 @@ The Flysky transmitter acts as the main interface for switching between sensing 
 | 8       | Switch D         | Laser Toggle                                                              | Turns on auto firing laser.                                                      |
 | 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
 | 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
-
+*Table 1 - Flysky controls*
 
 
