@@ -269,6 +269,7 @@ Using I2C communication, the APDS9960 color sensor is initialized and reads red,
 - Red - C4
 - Green - F4
 - Blue - A4
+
 **I2C Pins:**
   - SCL - RC3
   - SDA - RC4
