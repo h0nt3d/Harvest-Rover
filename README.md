@@ -1,6 +1,8 @@
 # Harvest Rover
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/banner.png?raw=true" width="800">
 
+*Figure 1 - Rover Image*
+
 The Harvest Rover is a small embedded system designed to participate in a competition known as *The Harvest*. During the competition, Rovers will participate by completing various tasks. These include:
 - RFID Sequence 
 - Optical Signal Decoding
@@ -31,7 +33,8 @@ This rover is specifically designed to complete 4 tasks:
 - Op-Amp - [Standard (General Purpose) Amplifier 2 Circuit Rail-to-Rail 8-PDIP](https://www.digikey.ca/en/products/detail/texas-instruments/TLV2462IP/277538?s=N4IgTCBcDa4JwDYC0BGAHHAzEgrEgcgCIgC6AvkA)
 - Bright LED - [C512A-WNN-CZ0B0151-ND](https://www.digikey.ca/en/products/detail/creeled-inc/C512A-WNN-CZ0B0151/2809629?s=N4IgTCBcDaIMIFYCMYCCBaA6gOW%2BuAWgAwBCRSy62AIiALoC%2BQA)
 - Driving MOSFET - [2N7000FS-ND](https://www.digikey.ca/en/products/detail/onsemi/2N7000/244278?s=N4IgTCBcDa4HIHYAMKBiBlAtHAIiAugL5A)
-- Flysky transmitter and receiver
+- [Saleae Logic Analyzer](https://www.amazon.ca/Logic-Black-Compatible-Ultra-Portable-Frustration/dp/B0749G85W2?source=ps-sl-shoppingads-lpcontext&psc=1&smid=A1UJUJY5V4HL51)
+- [Flysky transmitter and receiver](https://www.amazon.ca/FS-i6-Transmitter-Receiver-FS-iA6B-Multirotor/dp/B0BRXSH4GZ?dib=eyJ2IjoiMSJ9.16ma_ytwLV5lHwIYSernybzKBm8Z85JCqtjxeHEqOhqIljZfvtulvHIDqG7ghYo-PpET2V8Haxa8JZQnTg9Smqxkqaf-dgzll2qtinbSof8KghYBrSnOurPqSaTo-5nXPXQGPG2wTlP5UF3v7BusKHoLcJWwCCZ-Ba7CrMjuKijHVMbpDg8UoHgo08imXRVWI-xiKb_0KDa01QJbHshEwD294YwzC9sDGPznktQ2E8I8voBogp5FrEND03aojrSGcyiEEnmFV3fsZOdYKWKXLBU66RG-e-ayPdj7OnRj_NQ.0SwYRXFKrN-C3YhNtB-G6acSH_YEwxvLrXPCtC4unIQ&dib_tag=se&keywords=Flysky&qid=1775529181&sr=8-8)
 
 
 Communication is made to PCU via UART protocol.
@@ -43,6 +46,8 @@ The UART Module and Interrupts are initialized for asynchronous serial communica
 
 
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/baud_rate.png?raw=true" width="400">
+
+*Figure 2 - Baud Rate Formula*
 
 SP1BRG = 68
 
@@ -378,7 +383,12 @@ void SPW_sample() {
 
 
 # Flysky Controls
+The Flysky transmitter acts as the main interface for switching between sensing modes, movement and communication tasks. <br>
+[main.c](https://github.com/h0nt3d/Harvest-Rover/blob/main/main.c)
+
 <img src="https://github.com/h0nt3d/ECE3232-Rover/blob/main/images/Flysky.png?raw=true">
+
+*Figure 3 - Flysky Diagram*
 
 | Channel | Control          | Operator Action                                                           | Rover Response                                                                   |
 | ------- | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -393,5 +403,6 @@ void SPW_sample() {
 | 9       | VRA              | Send RFID Gate UID                                                        | Send RFID digits to homebase.                                                    |
 | 10      | VRB              | Send Freq Value                                                           | Send Fundamental Freq to homebase.                                               |
 
+*Table 1 - Flysky controls*
 
 
