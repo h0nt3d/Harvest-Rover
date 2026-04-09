@@ -24,6 +24,11 @@ void send_request_repair();
 void send_transmit_repair(); 
 void send_surface_exploration(uint16_t task_id, uint16_t task_value);
 
+void PlayC4(uint16_t duration_ms);
+void PlayF4(uint16_t duration_ms);
+void PlayA4(uint16_t duration_ms);
+void PlayC5(uint16_t duration_ms);
+
 void I2C_Init();
 void APDS9960_Init();
 void APDS9960_Reset();

@@ -75,6 +75,23 @@ void PlayA4(uint16_t duration_ms)
     }
 }
 
+void PlayC5(uint16_t duration_ms)
+{
+    ANSELBbits.ANSB1 = 0;
+    TRISBbits.TRISB1 = 0;
+
+    uint16_t half_period = 540;
+    uint32_t cycles = ((uint32_t)duration_ms * 1000UL) / (half_period * 2UL);
+
+    for (uint32_t i = 0; i < cycles; i++) {
+        LATBbits.LATB1 = 1;
+        DelayMicroseconds(half_period);
+
+        LATBbits.LATB1 = 0;
+        DelayMicroseconds(half_period);
+    }
+}
+
 void I2C_Init() 
 {
     SSP1CLKPPS = 0x13; // RC3 = SCL input
@@ -197,21 +214,21 @@ RGBC_t APDS9960_ReadColors()
     
     if (data.red > data.green && data.red > data.blue) {
         LATAbits.LATA0 = 1;
-        PlayC4(750);
+        PlayC4(250);
     }
     else {
         LATAbits.LATA0 = 0;
     }
     
     if (data.green > data.red && data.green > data.blue) {
-        PlayF4(750);
+        PlayF4(250);
     }
     else {
         LATAbits.LATA0 = 0;
     }
     
     if (data.blue > data.red && data.blue > data.green) {
-        PlayA4(750);
+        PlayA4(250);
     }
     else {
         LATAbits.LATA0 = 0;

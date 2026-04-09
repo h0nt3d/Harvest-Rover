@@ -13,7 +13,18 @@ void main()
     
     initialize();
     send_set_pcu_info();
+    
     send_set_laser_scope();
+    
+    PlayA4(100);
+    PlayC4(100);
+    PlayF4(100);
+    
+    PlayA4(100);
+    PlayC4(100);
+    PlayF4(100);
+    
+    PlayC5(500);
     
     
     while (1) {
